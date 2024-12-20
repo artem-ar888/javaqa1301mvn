@@ -36,14 +36,26 @@ public class TodosTest {
     }
 
     @Test
-    public void findQueryInTasksOfDifferentType() {
+    public void findQueryWhichIsNotContainedInTasks() {
         todos.add(simpleTask);
         todos.add(epic);
         todos.add(meeting);
+        String query = "такого нет";
+
+        Task[] expected = {};
+        Task[] actual = todos.search(query);
+
+        Assertions.assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void findQueryWhichIsContainedInOneTask() {
         todos.add(simpleTask);
+        todos.add(epic);
+        todos.add(meeting);
         String query = " позвонить ";
 
-        Task[] expected = {simpleTask, simpleTask};
+        Task[] expected = {simpleTask};
         Task[] actual = todos.search(query);
 
         Assertions.assertArrayEquals(expected, actual);
